@@ -1,8 +1,11 @@
 # Google Apps Script
 
-## ReceiptMailToPDF
+## GmailToPDF
 
-AppleやAirレジなどのメールそのものをPDF化する必要性がある領収書メールを、Googleドライブの指定フォルダにファイル名 yyyyMMdd_HHmmss_Vendor.pdf のルールでPDFとして自動保存するためのスクリプト
+Gmailに届いたメール本文を、Googleドライブの指定フォルダにファイル名 yyyyMMdd_HHmmss_Vendor.pdf のルールでPDFとして自動保存するためのスクリプトです。
+メールの差出人ドメインに応じて、ファイル名に設定する名前を決めることができます。
+
+電子帳簿保存法に対応するために、AppleやAirレジなどのメールそのものをPDFファイルとして保存する必要性がある領収書メールの自動保存などに活用できます。
 
 ### 必要な事前準備
 
