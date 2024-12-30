@@ -1,6 +1,10 @@
 function AttachementToDrive() {
-  const FOLDER_ID=''; // Set Target Folder ID
-  const folder = DriveApp.getFolderById(FOLDER_ID);
+
+  // Set Email Subject and Target Folder ID
+  const targetFolders = [
+    ["", ""],
+    ["", ""]
+  ];
 
   const labelToDrive = GmailApp.getUserLabelByName('ToDrive');
   const query = 'label:todrive';
@@ -12,6 +16,14 @@ function AttachementToDrive() {
     for (const message of messages) {
       try {
         let attachements =  message.getAttachments();
+        let subject = message.getSubject();
+        let folderID = "";
+        
+        for (const targetFolder of targetFolders) {
+          if (subject.includes(targetFolder[0])) { folderID = targetFolder[1]; break; }
+        }
+
+        const folder = DriveApp.getFolderById(folderID);
 
         for (const attachement of attachements) {
           let date = message.getDate();
