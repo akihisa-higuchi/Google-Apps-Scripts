@@ -1,0 +1,29 @@
+function AttachementToDrive() {
+  const FOLDER_ID=''; // Set Target Folder ID
+  const folder = DriveApp.getFolderById(FOLDER_ID);
+
+  const labelToDrive = GmailApp.getUserLabelByName('ToDrive');
+  const query = 'label:todrive';
+
+  const threads = GmailApp.search(query);
+
+  for (const thread of threads) {
+    const messages = thread.getMessages();
+    for (const message of messages) {
+      try {
+        let attachements =  message.getAttachments();
+
+        for (const attachement of attachements) {
+          let date = message.getDate();
+          let splitName = attachement.getName().split('.');
+          let fileName = `${splitName[0]}_${Utilities.formatDate(date, 'JST', 'yyyyMMdd_HHmmss')}.${splitName[1]}`;
+          attachement.setName(fileName);
+          folder.createFile(attachement);
+        }
+      } catch(e) {
+        Logger.log(e.message);
+      }
+    }
+    thread.removeLabel(labelToDrive);
+  }
+}
