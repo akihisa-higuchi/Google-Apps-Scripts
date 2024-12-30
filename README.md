@@ -14,7 +14,7 @@ Gmailに届いたメール本文を、Googleドライブの指定フォルダに
 - Googleドライブで、Google Apps Scriptを新規作成してこのスクリプトをコピーし、FOLDER_ID_INVOICEの箇所に保存対象としたいGoogleドライブフォルダのフォルダIDを設定（フォルダIDは、フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx）
 - Google Apps Scriptのトリガー設定で、毎日6時など自動稼働するように設定
 
-##AttachementToDrive
+## AttachementToDrive
 
 Gmailに届いたメールの添付ファイルを、Googleドライブの指定フォルダにファイル名 元ファイル名_yyyyMMdd_HHmmss.元拡張子 のルールで自動保存するためのスクリプトです。 
 
