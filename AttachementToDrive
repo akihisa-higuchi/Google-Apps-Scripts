@@ -1,6 +1,6 @@
 function AttachementToDrive() {
 
-  // Set Email Subject and Target Folder ID
+// Set Email Domain, Email Subject, and Target Folder ID
   const targetFolders = [
     ["", ""],
     ["", ""]
@@ -16,11 +16,12 @@ function AttachementToDrive() {
     for (const message of messages) {
       try {
         let attachements =  message.getAttachments();
+        let fromAddress = message.getFrom();
         let subject = message.getSubject();
         let folderID = "";
         
         for (const targetFolder of targetFolders) {
-          if (subject.includes(targetFolder[0])) { folderID = targetFolder[1]; break; }
+          if (fromAddress.includes(targetFolder[0]) && subject.includes(targetFolder[1])) { folderID = targetFolder[2]; break; }
         }
 
         const folder = DriveApp.getFolderById(folderID);
