@@ -13,3 +13,14 @@ Gmailに届いたメール本文を、Googleドライブの指定フォルダに
 - Gmailのフィルタ機能で対象にしたいメールに専用ラベル（Receipt/Waiting）を設定するフィルタを作る
 - Googleドライブで、Google Apps Scriptを新規作成してこのスクリプトをコピーし、FOLDER_ID_INVOICEの箇所に保存対象としたいGoogleドライブフォルダのフォルダIDを設定（フォルダIDは、フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx）
 - Google Apps Scriptのトリガー設定で、毎日6時など自動稼働するように設定
+
+##AttachementToDrive
+
+Gmailに届いたメールの添付ファイルを、Googleドライブの指定フォルダにファイル名 元ファイル名_yyyyMMdd_HHmmss.元拡張子 のルールで自動保存するためのスクリプトです。 
+
+### 必要な事前準備
+
+- Gmailでラベル[ToDrive]を作成
+- Gmailのフィルタ機能で対象にしたいメールに専用ラベル（ToDrive）を設定するフィルタを作る
+- Googleドライブで、Google Apps Scriptを新規作成してこのスクリプトをコピーし、FOLDER_ID_INVOICEの箇所に保存対象としたいGoogleドライブフォルダのフォルダIDを設定（フォルダIDは、フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx）
+- Google Apps Scriptのトリガー設定で、毎日6時など自動稼働するように設定
