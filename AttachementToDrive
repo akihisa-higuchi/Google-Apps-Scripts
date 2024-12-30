@@ -2,8 +2,8 @@ function AttachementToDrive() {
 
 // Set Email Domain, Email Subject, and Target Folder ID
   const targetFolders = [
-    ["", ""],
-    ["", ""]
+    ["", "", ""],
+    ["", "". ""]
   ];
 
   const labelToDrive = GmailApp.getUserLabelByName('ToDrive');
