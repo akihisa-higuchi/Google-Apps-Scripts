@@ -15,11 +15,11 @@ Gmailに届いたメール本文を、差出人アドレス（ドメインのみ
 
 ## AttachementToDrive
 
-Gmailに届いたメールの添付ファイルを、差出人アドレスとメールの件名に含まれる文字を条件として、Googleドライブの指定フォルダにファイル名 元ファイル名_yyyyMMdd_HHmmss.元拡張子 のルールで自動保存するためのスクリプトです。 
+Gmailに届いたメールの添付ファイルを、差出人アドレスとメールの件名に含まれる文字を条件として、Googleドライブの指定フォルダにファイル名 [元ファイル名or新しいファイル名_yyyyMMdd_HHmmss.元拡張子] のルールで自動保存するためのスクリプトです。 
 
 ### 必要な事前準備
 
 - Gmailでラベル[ToDrive]を作成
 - Gmailのフィルタ機能で対象にしたいメールに専用ラベル（ToDrive）を設定するフィルタを作る
-- Googleドライブで、Google Apps Scriptを新規作成してこのスクリプトをコピーし、targetFoldersの配列に["対象メールの差出人アドレス（ドメインのみでも可）","件名に含まれる文字", "保存対象としたいGoodleドライブのフォルダID"]を設定（フォルダIDは、フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx）
+- Googleドライブで、Google Apps Scriptを新規作成してこのスクリプトをコピーし、targetFoldersの配列に["対象メールの差出人アドレス（ドメインのみでも可）","件名に含まれる文字", "保存対象としたいGoodleドライブのフォルダID", "新しいファイル名(空白なら元のファイル名に)"]を設定（フォルダIDは、フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx）
 - Google Apps Scriptのトリガー設定で、毎日6時など自動稼働するように設定
