@@ -1,5 +1,7 @@
 # Google Apps Script
 
+- GoogleドライブのフォルダID：フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx
+
 ## GmailToPDF
 
 Gmailに届いたメール本文を、差出人アドレス（ドメインのみでも可）を条件として、Googleドライブの指定フォルダにファイル名 yyyyMMdd_HHmmss_Vendor.pdf のルールでPDFとして自動保存するためのスクリプトです。
@@ -10,8 +12,8 @@ Gmailに届いたメール本文を、差出人アドレス（ドメインのみ
 
 - Gmailでラベル[ToPDF]を作成
 - Gmailのフィルタ機能で対象にしたいメールに専用ラベル（ToPDF）を設定するフィルタを作る
-- Googleドライブで、Google Apps Scriptを新規作成してこのスクリプトをコピーし、vendorsの配列に["対象メールの差出人アドレス（ドメインのみでも可）","ファイル名に付けたい名前（Appleなど）", "保存対象としたいGoodleドライブのフォルダID", "処理後に追加したいラベル（空白の場合は未設定）"] を設定（フォルダIDは、フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx）
-- Google Apps Scriptのトリガー設定で、毎日6時など自動稼働するように設定
+- vendorsの配列に ["対象メールの差出人アドレス（ドメインのみでも可）","ファイル名に付けたい名前（Appleなど）", "保存対象としたいGoodleドライブのフォルダID", "処理後に追加したいラベル（空白の場合は未設定）"] を設定
+- Google Apps Scriptのトリガー設定で、毎日6時など自動稼働するように設定してください
 
 ## AttachementToDrive
 
@@ -21,5 +23,5 @@ Gmailに届いたメールの添付ファイルを、差出人アドレスとメ
 
 - Gmailでラベル[ToDrive]を作成
 - Gmailのフィルタ機能で対象にしたいメールに専用ラベル（ToDrive）を設定するフィルタを作る
-- Googleドライブで、Google Apps Scriptを新規作成してこのスクリプトをコピーし、targetFoldersの配列に["対象メールの差出人アドレス（ドメインのみでも可）","件名に含まれる文字", "保存対象としたいGoodleドライブのフォルダID", "新しいファイル名(空白なら元のファイル名に)","処理後に追加したいラベル（空白の場合は未設定）"]を設定（フォルダIDは、フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx）
-- Google Apps Scriptのトリガー設定で、毎日6時など自動稼働するように設定
+- targetFoldersの配列に ["対象メールの差出人アドレス（ドメインのみでも可）","件名に含まれる文字", "保存対象としたいGoodleドライブのフォルダID", "新しいファイル名(空白なら元のファイル名に)","処理後に追加したいラベル（空白の場合は未設定）"] を設定
+- Google Apps Scriptのトリガー設定で、毎日6時など自動稼働するように設定してください
