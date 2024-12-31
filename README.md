@@ -1,6 +1,6 @@
 # Google Apps Script
 
-- GoogleドライブのフォルダID：フォルダを開いた時のアドレスの https://drive.google.com/drive/folders/xxxxx のxxxxxx
+- GoogleドライブのフォルダID：フォルダを開いた時のアドレスの drive.google.com/drive/folders/xxxxx のxxxxxx
 
 ## GmailToPDF
 
