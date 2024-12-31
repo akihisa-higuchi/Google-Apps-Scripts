@@ -1,9 +1,9 @@
 function AttachementToDrive() {
 
-// Set Email Domain, Email Subject, and Target Folder ID
+// Set Email Domain, Subject, Target FolderID, and New FileName (Set original fileName if blank)
   const targetFolders = [
-    ["", "", ""],
-    ["", "". ""]
+    ["", "", "", ""],
+    ["", "", "", ""]
   ];
 
   const labelToDrive = GmailApp.getUserLabelByName('ToDrive');
@@ -19,9 +19,14 @@ function AttachementToDrive() {
         let fromAddress = message.getFrom();
         let subject = message.getSubject();
         let folderID = "";
+        let newFileName = "";
         
         for (const targetFolder of targetFolders) {
-          if (fromAddress.includes(targetFolder[0]) && subject.includes(targetFolder[1])) { folderID = targetFolder[2]; break; }
+          if (fromAddress.includes(targetFolder[0]) && subject.includes(targetFolder[1])) {
+            folderID = targetFolder[2];
+            newFileName = targetFolder[3];
+            break;
+            }
         }
 
         const folder = DriveApp.getFolderById(folderID);
@@ -29,7 +34,10 @@ function AttachementToDrive() {
         for (const attachement of attachements) {
           let date = message.getDate();
           let splitName = attachement.getName().split('.');
-          let fileName = `${splitName[0]}_${Utilities.formatDate(date, 'JST', 'yyyyMMdd_HHmmss')}.${splitName[1]}`;
+
+          if (newFileName.length == 0) { newFileName = splitName[0]; }
+
+          let fileName = `${newFileName}_${Utilities.formatDate(date, 'JST', 'yyyyMMdd_HHmmss')}.${splitName[1]}`;
           attachement.setName(fileName);
           folder.createFile(attachement);
         }
