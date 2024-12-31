@@ -1,20 +1,21 @@
 function AttachementToDrive() {
 
-// Set Email Domain, Subject, Target FolderID, and New FileName (Set original fileName if blank)
+// Set Email Domain, Subject, Target FolderID, New FileName (Set original fileName if blank), and Label
   const targetFolders = [
-    ["", "", "", ""],
-    ["", "", "", ""]
+    ["", "", "", "", ""],
+    ["", "", "", "", ""]
   ];
 
   const labelToDrive = GmailApp.getUserLabelByName('ToDrive');
   const query = 'label:todrive';
-
   const threads = GmailApp.search(query);
 
-  for (const thread of threads) {
-    const messages = thread.getMessages();
-    for (const message of messages) {
-      try {
+  try {
+    for (const thread of threads) {
+      let setLabel = '';
+      const messages = thread.getMessages();
+
+      for (const message of messages) {
         let attachements =  message.getAttachments();
         let fromAddress = message.getFrom();
         let subject = message.getSubject();
@@ -25,6 +26,7 @@ function AttachementToDrive() {
           if (fromAddress.includes(targetFolder[0]) && subject.includes(targetFolder[1])) {
             folderID = targetFolder[2];
             newFileName = targetFolder[3];
+            if (targetFolder[4].length) { setLabel = targetFolder[4]; }            
             break;
             }
         }
@@ -41,10 +43,11 @@ function AttachementToDrive() {
           attachement.setName(fileName);
           folder.createFile(attachement);
         }
-      } catch(e) {
-        Logger.log(e.message);
       }
+      thread.removeLabel(labelToDrive);
+      if (setLabel.length) { thread.addLabel(GmailApp.getUserLabelByName(setLabel)); }
     }
-    thread.removeLabel(labelToDrive);
+  } catch(e) {
+    Logger.log(e.message);
   }
 }
