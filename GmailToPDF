@@ -1,43 +1,50 @@
 function GmailToPDF() {
 
-  const FOLDER_ID = ''; // Set Target Folder ID
-  const folder = DriveApp.getFolderById(FOLDER_ID);
-
-  // Set Vendors Email FROM domain and Name
+  // Set Email From, Name, Target Folder ID, and Label
   const vendors = [
-    ["apple.com","Apple"],
-    ["airregi.jp","Airレジ"]
+    ["no_reply@email.apple.com","Apple","xxxxx","Receipt"],
+    ["applesupport@email.apple.com","Apple","xxxxx","Warranty"],
+    ["airregi.jp","Airレジ","xxxxx","Receipt"]
   ];
 
-  const labelWaiting = GmailApp.getUserLabelByName('Receipt/Waiting');
-  const labelReceipt = GmailApp.getUserLabelByName('Receipt');
-  const query = 'label:receipt-waiting';
-
+  const labelToPDF = GmailApp.getUserLabelByName('ToPDF');
+  const query = 'label:topdf';
   const threads = GmailApp.search(query);
+  
+  try {
+    for (const thread of threads) {
+      let setLabel = '';
+      const messages = thread.getMessages();
 
-  for (const thread of threads) {
-    const messages = thread.getMessages();
-    for (const message of messages) {
+      for (const message of messages) {
+        let fromAddress = message.getFrom();
+        let fromVendor = 'Vendor';
+        let folderID = '';
 
-      let fromAddress = message.getFrom();
-      let fromVendor = 'Vendor';
+        for (const vendor of vendors) {        
+          if (fromAddress.includes(vendor[0])) {
+            fromVendor = vendor[1];
+            folderID = vendor[2];
+            if (vendor[3].length) { setLabel = vendor[3]; }
+            break;
+          }
+        }
+        let blob = message.getBody();
+        blob = InlineImages_(blob);
+        blob = Utilities.newBlob(blob,'text/html').getAs('application/pdf');
 
-      for (const vendor of vendors) {        
-        if (fromAddress.includes(vendor[0])) { fromVendor = vendor[1]; break; }
+        let date = message.getDate();
+        let docTitle = `${Utilities.formatDate(date, 'JST', 'yyyyMMdd_HHmmss')}_${fromVendor}`;
+        blob.setName(docTitle + '.pdf'); 
+
+        const folder = DriveApp.getFolderById(folderID);
+        folder.createFile(blob);
       }
-
-      let blob = message.getBody();
-      blob = InlineImages_(blob);
-      blob = Utilities.newBlob(blob,'text/html').getAs('application/pdf');
-
-      let date = message.getDate();
-      let docTitle = `${Utilities.formatDate(date, 'JST', 'yyyyMMdd_HHmmss')}_${fromVendor}`;
-      blob.setName(docTitle + '.pdf'); 
-
-      folder.createFile(blob);
+      thread.removeLabel(labelToPDF);
+      if (setLabel.length) { thread.addLabel(GmailApp.getUserLabelByName(setLabel)); }
     }
-    thread.removeLabel(labelWaiting);
-    thread.addLabel(labelReceipt);
+  } catch(e) {
+    Logger.log(e.message);
   }
 }
 
@@ -51,8 +58,8 @@ function InlineImages_(html) {
       let base64Url = 'data:' + contentType + ';base64,' + base64;
       return match.replace(src, base64Url);
     } catch (e) {
+      Logger.log(e.message);
       return match;
     }
   });
-
 }
